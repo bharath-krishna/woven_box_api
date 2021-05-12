@@ -3,6 +3,7 @@ python:
   - "3.7"
 install:
   - pip install pipenv --upgrade-strategy=only-if-needed
-  - pipenv install
+  - pipenv shell
+  - pipenv install  
 script:
   - pytest
