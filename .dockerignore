@@ -1,0 +1,25 @@
+# Project-Specifc
+.git*
+.shellcheckrc
+.vscode
+secrets*
+deployment
+*.log
+
+# Python-Specific
+.coverage
+.mypy*
+.pytest*
+__pycache__
+htmlcov
+*.pyc
+*/.DS_Store
+.DS_Store
+Pipfile.lock
+.pytest_cache
+
+# Documentation
+README*
+
+# Secrets
+secret.json

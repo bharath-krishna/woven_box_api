@@ -1,0 +1,10 @@
+*.pyc
+*/.DS_Store
+.DS_Store
+Pipfile.lock
+.coverage
+__pycache__
+.vscode
+htmlcov
+.pytest_cache
+secret.json
