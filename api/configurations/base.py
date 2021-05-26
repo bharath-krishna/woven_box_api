@@ -74,7 +74,7 @@ logger = log_config.get_logger('api')
 
 class Settings(BaseSettings):
     version: str = '0.0.1'
-    title: str = "FastAPI Framework - Boilerplate code"
+    title: str = "Woven Box - Backend APIs"
     logger: logging.Logger = logger
     prefix: str = environ.get('API_PREFIX', '/api')
     host: str = environ.get('API_HOST', '0.0.0.0')

@@ -25,5 +25,5 @@ exclude_lines =
 ignore_errors = True
 
 [html]
-title = "FastAPI framework - Boilerplate code"
+title = "Woven Box - Backend APIs"
 directory = htmlcov
