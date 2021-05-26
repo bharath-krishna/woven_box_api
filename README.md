@@ -1,7 +1,7 @@
 # Woven Box
 ## Backend APIs
 
-[![Build Status](https://travis-ci.com/bharath-krishna/fastapi_framework.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/fastapi_framework)
+[![Build Status](https://travis-ci.com/bharath-krishna/woven-box_api.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/woven-box_api)
 
 This is a [FastAPI](https://fastapi.tiangolo.com/) project.
 
@@ -31,28 +31,6 @@ Firebase service account details are base64 encoded from a secrets.json file to 
 ```
 
 and access [http://localhost:8088/apidocs](http://localhost:8088/apidocs) for Swagger specs page.
-
-You can use below JWT tokens to authorize in Swagger specs.
-
-```
-JWT Tokens
-
-Bharath
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJoYXJhdGgiLCJpZCI6InNxTDFPSkRubmNxTkVGV1lTeEFaIiwiaWF0IjoxNjE5NTA1ODIxLCJleHAiOjE2MjA1MDU4MjF9.x49Wt89fod751sIahASYTu6XKPRlhJlqNl0i18t4qFU
-
-
-Sanjay
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlNhbmpheSIsImlkIjoialo5MkozaE5nQVNlMnVSRENCUW4iLCJpYXQiOjE2MTk1MDU4MjEsImV4cCI6MTYyMDUwNTgyMX0.oDimnvv40Ji7sWevG2ah-8OKF1Vn0kcODrbrqAL1ldI
-
-
-Anitha
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFuaXRoYSIsImlkIjoidG9DR1hBUEFySHZuQzg1NzVqYzQiLCJpYXQiOjE2MTk1MDU4MjEsImV4cCI6MTYyMDUwNTgyMX0.7cHKuujHPm2_LevQBReGKfTcipEes8twZ4B4PR6kgkA
-
-```
-These tokens are valid till 9 May 05:30 GMT, you can regenerate token by modifying "exp" in payload for testing purposes.
 
 
 ## How to stop and remove
