@@ -1,4 +1,3 @@
-from typing import List
 from api.modules.profile import Profile
 from api.models.auth import require_user
 from api.models.profile import  UserModel

@@ -1,5 +1,5 @@
 from api.modules import BaseModule
-from api.exceptions import APIError
+
 
 class Profile(BaseModule):
     collection_name: str = 'profile'

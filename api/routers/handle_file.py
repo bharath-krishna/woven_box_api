@@ -1,19 +1,14 @@
 from api.modules.uploads import FileUploadModel
-import aiofiles
-import os
-
-from pathlib import Path
 from typing import Dict, List
-import fastapi
-
 from fastapi.datastructures import UploadFile
 from fastapi.param_functions import File
 from api.modules.profile import Profile
 from api.models.auth import require_user
 from api.models.profile import  UserModel
 from fastapi import APIRouter, Depends, Request, HTTPException
-router = APIRouter()
 
+
+router = APIRouter()
 
 @router.get('/uploads',
             tags=['Profile'],
