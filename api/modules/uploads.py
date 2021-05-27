@@ -1,3 +1,4 @@
+from api.modules import BaseModule
 from typing import Dict, List
 import aiofiles
 import os
@@ -6,7 +7,7 @@ from pathlib import Path
 from fastapi import HTTPException
 
 
-class FileUploadModel():
+class FileUploadModel(BaseModule):
     async def get_uploads(self) -> Dict[str, List[str]]:
         uploads_path = Path(__file__).parent.parent.parent/'uploads'
         _, _, filenames = next(os.walk(uploads_path))

@@ -84,6 +84,7 @@ class Settings(BaseSettings):
     reload: bool = environ.get('API_RELOAD', True)
     access_log: bool = environ.get('API_ACCESS_LOG', True)
     debug: bool = environ.get('API_DEBUG', True)
+    firebase: str = environ.get('API_FIREBASE_CONFIGS')
     signature_text: str = environ.get('API_SIGNATURE_TEXT', "somesecret")
 
     class Config:

@@ -21,9 +21,10 @@ router = APIRouter()
             description='Get user profile',
             response_model=Dict[str, List[str]]
             )
-async def get_uploads(request: Request):
-    uploads = FileUploadModel()
+async def get_uploads(request: Request, user: UserModel = Depends(require_user)):
+    uploads = FileUploadModel(request)
     response = await uploads.get_uploads()
+    print(user['email'])
     return response
 
 
@@ -33,8 +34,9 @@ async def get_uploads(request: Request):
             description='Get user profile',
             response_model=Dict[str, List[str]]
             )
-async def upload_files(request: Request, uploaded_files: List[UploadFile] = File(...)):
-    uploads = FileUploadModel()
+async def upload_files(request: Request, uploaded_files: List[UploadFile] = File(...),
+        user: UserModel = Depends(require_user)):
+    uploads = FileUploadModel(request)
     response = await uploads.upload_file(uploaded_files)
     return response
 
@@ -45,7 +47,7 @@ async def upload_files(request: Request, uploaded_files: List[UploadFile] = File
             description='Get user profile',
             response_model=Dict[str, str]
             )
-async def delete_file(request: Request, filename: str):
-    uploads = FileUploadModel()
+async def delete_file(request: Request, filename: str, user: UserModel = Depends(require_user)):
+    uploads = FileUploadModel(request)
     response = await uploads.delete_file(filename)
     return response
