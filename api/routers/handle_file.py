@@ -2,7 +2,6 @@ from api.modules.uploads import FileUploadModel
 from typing import Dict, List
 from fastapi.datastructures import UploadFile
 from fastapi.param_functions import File
-from api.modules.profile import Profile
 from api.models.auth import require_user
 from api.models.profile import  UserModel
 from fastapi import APIRouter, Depends, Request, HTTPException
@@ -11,9 +10,8 @@ from fastapi import APIRouter, Depends, Request, HTTPException
 router = APIRouter()
 
 @router.get('/uploads',
-            tags=['Profile'],
-            summary='Get Profile',
-            description='Get user profile',
+            tags=['Uploads'],
+            summary='Get all uploaded files',
             response_model=Dict[str, List[str]]
             )
 async def get_uploads(request: Request, user: UserModel = Depends(require_user)):
@@ -23,9 +21,8 @@ async def get_uploads(request: Request, user: UserModel = Depends(require_user))
 
 
 @router.post('/uploads',
-            tags=['Profile'],
-            summary='Get Profile',
-            description='Get user profile',
+            tags=['Uploads'],
+            summary='Upload a file',
             response_model=Dict[str, List[str]]
             )
 async def upload_files(request: Request, uploaded_files: List[UploadFile] = File(...),
@@ -36,9 +33,8 @@ async def upload_files(request: Request, uploaded_files: List[UploadFile] = File
 
 
 @router.delete('/uploads/{filename}',
-            tags=['Profile'],
-            summary='Get Profile',
-            description='Get user profile',
+            tags=['Uploads'],
+            summary='Delete an uploaded file',
             response_model=Dict[str, str]
             )
 async def delete_file(request: Request, filename: str, user: UserModel = Depends(require_user)):
