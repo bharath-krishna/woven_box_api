@@ -3,7 +3,7 @@ python:
   - "3.7"
 install:
   - pip install pipenv setuptools
-  - pipenv lock -rd | tail -n +2 > requirements.txt
+  - pipenv lock -r -d | tail -n +2 > requirements.txt
   - pip install -r requirements.txt
 script:
   - python3 -m pytest
