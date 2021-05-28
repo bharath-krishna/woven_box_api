@@ -13,9 +13,9 @@ install = "*"
 python-multipart = "*"
 aiofiles = "*"
 firebase-admin = "*"
+pytest-cov = "*"
 
 [dev-packages]
-pytest-cov = "*"
 
 [requires]
 python_version = "3.7"
