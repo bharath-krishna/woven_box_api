@@ -1,3 +1,6 @@
+import logging
+import os
+
 from api.routers import handle_file, info
 from api.configurations.base import config
 from fastapi import FastAPI
@@ -51,6 +54,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event('startup')
+def check_storage_path():
+    logging.info("Application Starting....")
+    storage_path = config.storage_path
+    if not os.path.exists(storage_path.__str__()):
+        try:
+            os.mkdir(storage_path.__str__())
+        except:
+            raise Exception(f"Failed to create storage path: {storage_path}")
+    return
 
 app.include_router(handle_file.router, prefix=config.prefix)
 app.include_router(info.router, prefix=config.prefix)
