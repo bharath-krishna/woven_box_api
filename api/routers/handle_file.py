@@ -18,7 +18,7 @@ router = APIRouter()
             )
 async def get_uploads(request: Request, user: UserModel = Depends(require_user)):
     uploads = FileUploadModel(request)
-    response = await uploads.get_uploads()
+    response = await uploads.get_uploads(user)
     return response
 
 
@@ -31,7 +31,7 @@ async def get_uploads(request: Request, user: UserModel = Depends(require_user))
 async def upload_files(request: Request, uploaded_files: List[UploadFile] = File(...),
         user: UserModel = Depends(require_user)):
     uploads = FileUploadModel(request)
-    response = await uploads.upload_file(uploaded_files)
+    response = await uploads.upload_file(uploaded_files, user)
     return response
 
 
@@ -43,5 +43,5 @@ async def upload_files(request: Request, uploaded_files: List[UploadFile] = File
             )
 async def delete_file(request: Request, filename: str, user: UserModel = Depends(require_user)):
     uploads = FileUploadModel(request)
-    response = await uploads.delete_file(filename)
+    response = await uploads.delete_file(filename, user)
     return response

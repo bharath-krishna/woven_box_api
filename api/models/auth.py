@@ -12,7 +12,7 @@ def get_token_user(request: Request,
     token = auth_creds.credentials
 
     try:
-        user = request.app.auth.verify_id_token(token)
+        user = UserModel(**request.app.auth.verify_id_token(token))
     except (InvalidIdTokenError):
         raise APIError('unauthorized')
     return user

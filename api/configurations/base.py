@@ -1,7 +1,6 @@
 import logging.config
 from functools import lru_cache
 from os import environ
-
 from pydantic import BaseSettings
 
 
@@ -86,6 +85,7 @@ class Settings(BaseSettings):
     debug: bool = environ.get('API_DEBUG', True)
     firebase: str = environ.get('API_FIREBASE_CONFIGS')
     signature_text: str = environ.get('API_SIGNATURE_TEXT', "somesecret")
+    storage_path: str = environ.get('API_STORAGE_PATH', environ.get('HOME') + '/woven_box_storage')
 
     class Config:
         env_prefix = 'API_'
