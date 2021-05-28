@@ -19,7 +19,6 @@ router = APIRouter()
 async def get_uploads(request: Request, user: UserModel = Depends(require_user)):
     uploads = FileUploadModel(request)
     response = await uploads.get_uploads()
-    print(user['email'])
     return response
 
 
@@ -36,7 +35,7 @@ async def upload_files(request: Request, uploaded_files: List[UploadFile] = File
     return response
 
 
-@router.delete('/uploads',
+@router.delete('/uploads/{filename}',
             tags=['Profile'],
             summary='Get Profile',
             description='Get user profile',

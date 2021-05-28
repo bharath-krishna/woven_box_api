@@ -14,7 +14,7 @@ def get_token_user(request: Request,
     try:
         user = request.app.auth.verify_id_token(token)
     except (InvalidIdTokenError):
-        raise APIError('invalid_field', field='Token')
+        raise APIError('unauthorized')
     return user
 
 async def require_user(user: UserModel = Depends(get_token_user)) -> UserModel:
