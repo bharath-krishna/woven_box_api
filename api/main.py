@@ -1,4 +1,4 @@
-from api.routers import handle_file
+from api.routers import handle_file, info
 from api.configurations.base import config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -53,3 +53,4 @@ app.add_middleware(
 )
 
 app.include_router(handle_file.router, prefix=config.prefix)
+app.include_router(info.router, prefix=config.prefix)
