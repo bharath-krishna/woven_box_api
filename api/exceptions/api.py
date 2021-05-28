@@ -63,7 +63,7 @@ class ErrorMessages:
         'invalid_field': (
             status.HTTP_400_BAD_REQUEST,
             'Invalid field',
-            'Please enter valid "%(field)s"',
+            'Please provide valid "%(field)s"',
         ),
         'invalid_field_value': (
             status.HTTP_400_BAD_REQUEST,
