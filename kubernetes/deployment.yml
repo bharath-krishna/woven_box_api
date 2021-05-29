@@ -128,6 +128,8 @@ spec:
       labels:
         app: woven-box-api
     spec:
+      nodeSelector:
+        type: woven-box-storage
       containers:
         - env:
             - name: API_FIREBASE_CONFIGS
