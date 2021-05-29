@@ -13,10 +13,6 @@ class FileUploadModel(BaseModule):
     def get_uploads_path(self, user) -> str:
         storage_path = config.storage_path
         uploads_path = Path(storage_path)/f'{str(user.uid)}/uploads'
-        return uploads_path
-
-    def get_uploads_path(self, user):
-        uploads_path = self.get_uploads_path(user)
         if not os.path.exists(uploads_path.__str__()):
             try:
                 os.makedirs(uploads_path.__str__())

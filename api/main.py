@@ -39,20 +39,21 @@ class Application(FastAPI):
 app = Application(docs_url='/apidocs',
                   swagger_ui_oauth2_redirect_url='/callback',
                   title=config.title,
-                  description="Code for logging, authentication with JWT token, e2e tests are added",
-                  version="0.0.1")
+                  description='Code for logging, authentication with JWT token, e2e tests are added',
+                  version=config.version)
 
 
 origins = [
-    "http://localhost:3000"
+    'http://localhost:3000',
+    'http://woven-box.bharathk.in'
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
 
 @app.on_event('startup')
@@ -62,7 +63,7 @@ def check_for_configs():
 
 @app.on_event('startup')
 def check_storage_path():
-    logging.info("Application Starting....")
+    logging.info('Application Starting....')
     storage_path = config.storage_path
     if not os.path.exists(storage_path.__str__()):
         try:
