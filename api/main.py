@@ -56,6 +56,11 @@ app.add_middleware(
 )
 
 @app.on_event('startup')
+def check_for_configs():
+    if not os.environ.get('API_FIREBASE_CONFIGS'):
+        raise Exception('API_FIREBASE_CONFIGS environment variable not set')
+
+@app.on_event('startup')
 def check_storage_path():
     logging.info("Application Starting....")
     storage_path = config.storage_path
