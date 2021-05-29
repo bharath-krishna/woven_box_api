@@ -130,6 +130,10 @@ spec:
     spec:
       nodeSelector:
         type: woven-box-storage
+      volumes:
+        - name: woven-box-storage
+          persistentVolumeClaim:
+            claimName: woven-box-pvc
       containers:
         - env:
             - name: API_FIREBASE_CONFIGS
@@ -150,6 +154,9 @@ spec:
           image: gcr.io/huddl-ai/github.com/bharath-krishna/woven-box_api
           imagePullPolicy: IfNotPresent
           name: woven-box-api-image-sha256-1
+          volumeMounts:
+            - mountPath: "/home/fastapi/woven_box_storage"
+              name: woven-box-storage
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
