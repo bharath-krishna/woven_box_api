@@ -1,3 +1,4 @@
+from api.exceptions.api import APIError
 from api.modules import BaseModule
 from typing import Dict, List
 import aiofiles
@@ -9,22 +10,30 @@ from fastapi import HTTPException
 
 
 class FileUploadModel(BaseModule):
-    async def get_uploads(self, user) -> Dict[str, List[str]]:
+    def get_uploads_path(self, user) -> str:
         storage_path = config.storage_path
         uploads_path = Path(storage_path)/f'{str(user.uid)}/uploads'
-        _, _, filenames = next(os.walk(uploads_path))
-        return {'filenames': filenames}
+        return uploads_path
 
-    async def upload_file(self, uploaded_files, user) -> Dict[str, List[str]]:
-        storage_path = config.storage_path
-        uploads_path = Path(storage_path)/f'{str(user.uid)}/uploads'
+    def get_uploads_path(self, user):
+        uploads_path = self.get_uploads_path(user)
         if not os.path.exists(uploads_path.__str__()):
             try:
                 os.makedirs(uploads_path.__str__())
-            except Exception as err:
-                print(err)
-                import ipdb;ipdb.set_trace()
-                
+            except:
+                raise APIError('not_found_general', value='Personal space')
+        return uploads_path
+
+    async def get_uploads(self, user) -> Dict[str, List[str]]:
+        uploads_path = self.get_uploads_path(user)
+        try:
+            _, _, filenames = next(os.walk(uploads_path.__str__()))
+        except StopIteration:
+            return {'filenames': []}
+        return {'filenames': filenames}
+
+    async def upload_file(self, uploaded_files, user) -> Dict[str, List[str]]:
+        uploads_path = self.get_uploads_path(user)
         
         for uploaded_file in uploaded_files:
             if Path(uploaded_file.filename).is_absolute():
@@ -43,8 +52,7 @@ class FileUploadModel(BaseModule):
         return {'uploaded_files': [uploaded_file.filename for uploaded_file in uploaded_files]}
 
     async def delete_file(self, filename, user) -> Dict[str, str]:
-        storage_path = config.storage_path
-        uploads_path = Path(storage_path)/f'{str(user.uid)}/uploads'
+        uploads_path = self.get_uploads_path(user)
         try:
             os.remove(str(uploads_path) + '/' + filename)
         except FileNotFoundError:
