@@ -20,6 +20,13 @@ class FileUploadModel(BaseModule):
                 raise APIError('not_found_general', value='Personal space')
         return uploads_path
 
+    async def get_file_exists(self, user, filename):
+        uploads_path = self.get_uploads_path(user)
+        filepath = uploads_path/filename
+        if not os.path.exists(filepath.__str__()):
+            raise APIError('not_found_general', value=f'File {filename}')
+        return filepath
+
     async def get_uploads(self, user) -> Dict[str, List[str]]:
         uploads_path = self.get_uploads_path(user)
         try:
