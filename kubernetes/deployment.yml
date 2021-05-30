@@ -1,0 +1,269 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: woven-box-api
+  managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector':
+            'f:matchLabels':
+              .: {}
+              'f:app': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:app': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"woven-box-api-image-sha256-1"}':
+                  .: {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"API_FIREBASE_CONFIGS"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"API_HOST"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"API_PORT"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                  'f:image': {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+                  'f:resources': {}
+                  'f:terminationMessagePath': {}
+                  'f:terminationMessagePolicy': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-29T02:54:58Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      manager: kube-controller-manager
+      operation: Update
+      time: '2021-05-29T02:55:22Z'
+  name: woven-box-api
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: woven-box-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: woven-box-api
+    spec:
+      nodeSelector:
+        type: woven-box-storage
+      volumes:
+        - name: woven-box-storage
+          persistentVolumeClaim:
+            claimName: woven-box-pvc
+      containers:
+        - env:
+            - name: API_FIREBASE_CONFIGS
+              valueFrom:
+                configMapKeyRef:
+                  key: API_FIREBASE_CONFIGS
+                  name: woven-box-api-config-mnwj
+            - name: API_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: API_HOST
+                  name: woven-box-api-config-mnwj
+            - name: API_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: API_PORT
+                  name: woven-box-api-config-mnwj
+          image: gcr.io/huddl-ai/github.com/bharath-krishna/woven-box_api
+          imagePullPolicy: IfNotPresent
+          name: woven-box-api-image-sha256-1
+          volumeMounts:
+            - mountPath: "/home/fastapi/woven_box_storage"
+              name: woven-box-storage
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: woven-box-api
+  managedFields:
+    - apiVersion: autoscaling/v2beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:maxReplicas': {}
+          'f:metrics': {}
+          'f:minReplicas': {}
+          'f:scaleTargetRef':
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-29T02:54:58Z'
+    - apiVersion: autoscaling/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:autoscaling.alpha.kubernetes.io/conditions': {}
+        'f:status':
+          'f:currentReplicas': {}
+      manager: vpa-recommender
+      operation: Update
+      time: '2021-05-29T02:55:13Z'
+  name: woven-box-api-hpa-ra3f
+  namespace: default
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 80
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: woven-box-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    cloud.google.com/neg-status: >-
+      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-woven-box-api-service-80-ee86301b"},"zones":["us-central1-c"]}
+  labels:
+    app: woven-box-api
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:externalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":80,"protocol":"TCP"}':
+              .: {}
+              'f:nodePort': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector':
+            .: {}
+            'f:app': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-28T12:12:58Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:cloud.google.com/neg-status': {}
+      manager: glbc
+      operation: Update
+      time: '2021-05-28T12:13:22Z'
+  name: woven-box-api-service
+  namespace: default
+spec:
+  clusterIP: 10.8.6.30
+  externalTrafficPolicy: Cluster
+  ports:
+    - nodePort: 32544
+      port: 80
+      protocol: TCP
+      targetPort: 8088
+  selector:
+    app: woven-box-api
+  sessionAffinity: None
+  type: NodePort

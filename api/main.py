@@ -1,3 +1,6 @@
+import logging
+import os
+
 from api.routers import handle_file, info
 from api.configurations.base import config
 from fastapi import FastAPI
@@ -36,21 +39,38 @@ class Application(FastAPI):
 app = Application(docs_url='/apidocs',
                   swagger_ui_oauth2_redirect_url='/callback',
                   title=config.title,
-                  description="Code for logging, authentication with JWT token, e2e tests are added",
-                  version="0.0.1")
+                  description='Code for logging, authentication with JWT token, e2e tests are added',
+                  version=config.version)
 
 
 origins = [
-    "http://localhost:3000"
+    'http://localhost:3000',
+    'http://woven-box.bharathk.in'
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
+
+@app.on_event('startup')
+def check_for_configs():
+    if not os.environ.get('API_FIREBASE_CONFIGS'):
+        raise Exception('API_FIREBASE_CONFIGS environment variable not set')
+
+@app.on_event('startup')
+def check_storage_path():
+    logging.info('Application Starting....')
+    storage_path = config.storage_path
+    if not os.path.exists(storage_path.__str__()):
+        try:
+            os.mkdir(storage_path.__str__())
+        except:
+            raise Exception(f"Failed to create storage path: {storage_path}")
+    return
 
 app.include_router(handle_file.router, prefix=config.prefix)
 app.include_router(info.router, prefix=config.prefix)
