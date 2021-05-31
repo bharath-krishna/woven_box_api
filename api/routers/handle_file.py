@@ -1,3 +1,5 @@
+import mimetypes
+from starlette.responses import FileResponse
 from api.modules.uploads import FileUploadModel
 from typing import Dict, List
 from fastapi.datastructures import UploadFile
@@ -18,6 +20,17 @@ async def get_uploads(request: Request, user: UserModel = Depends(require_user))
     uploads = FileUploadModel(request)
     response = await uploads.get_uploads(user)
     return response
+
+
+@router.get('/uploads/{filename}',
+            tags=['Uploads'],
+            summary='Retreive a file',
+            )
+async def get_uploads(request: Request, filename: str, user: UserModel = Depends(require_user)):
+    uploads = FileUploadModel(request)
+    filepath = await uploads.get_file_exists(user, filename)
+    filetype, _ = mimetypes.guess_type(filepath)
+    return FileResponse(filepath, media_type=filetype)
 
 
 @router.post('/uploads',
