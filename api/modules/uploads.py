@@ -29,35 +29,15 @@ class FileUploadModel(BaseModule):
 
     async def get_uploads(self, user) -> Dict[str, List[str]]:
         uploads_path = self.get_uploads_path(user)
-        try:
-            _, _, filenames = next(os.walk(uploads_path.__str__()))
-        except StopIteration:
-            return {'filenames': []}
+        filenames = await self.client.get_dir_files(uploads_path)
         return {'filenames': filenames}
 
     async def upload_file(self, uploaded_files, user) -> Dict[str, List[str]]:
         uploads_path = self.get_uploads_path(user)
-        
-        for uploaded_file in uploaded_files:
-            if Path(uploaded_file.filename).is_absolute():
-                raise HTTPException(status_code=400, detail="Please provide relative path")
-
-            name = uploads_path/uploaded_file.filename
-            try:
-                async with aiofiles.open(name.__str__(), 'wb') as saving_file:
-                    while True:
-                        content = await uploaded_file.read(1024)
-                        if not content:
-                            break
-                        await saving_file.write(content)
-            except FileNotFoundError:
-                raise HTTPException(status_code=404, detail=f"File '{uploaded_file.filename}' Not Found")
-        return {'uploaded_files': [uploaded_file.filename for uploaded_file in uploaded_files]}
+        uploaded_file_result = await self.client.upload_file(uploaded_files, uploads_path)
+        return {'uploaded_files': uploaded_file_result}
 
     async def delete_file(self, filename, user) -> Dict[str, str]:
         uploads_path = self.get_uploads_path(user)
-        try:
-            os.remove(str(uploads_path) + '/' + filename)
-        except FileNotFoundError:
-            raise HTTPException(status_code=404, detail=f"File {filename} Not Found in storage")
-        return {'removed_file': filename}
+        deleted_file = await self.client.delete_file(filename, uploads_path)
+        return {'removed_file': deleted_file}
