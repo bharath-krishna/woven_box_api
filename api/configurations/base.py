@@ -1,7 +1,6 @@
 import logging.config
 from functools import lru_cache
 from os import environ
-
 from pydantic import BaseSettings
 
 
@@ -74,7 +73,7 @@ logger = log_config.get_logger('api')
 
 class Settings(BaseSettings):
     version: str = '0.0.1'
-    title: str = "FastAPI Framework - Boilerplate code"
+    title: str = "Woven Box - Backend APIs"
     logger: logging.Logger = logger
     prefix: str = environ.get('API_PREFIX', '/api')
     host: str = environ.get('API_HOST', '0.0.0.0')
@@ -84,7 +83,9 @@ class Settings(BaseSettings):
     reload: bool = environ.get('API_RELOAD', True)
     access_log: bool = environ.get('API_ACCESS_LOG', True)
     debug: bool = environ.get('API_DEBUG', True)
+    firebase: str = environ.get('API_FIREBASE_CONFIGS')
     signature_text: str = environ.get('API_SIGNATURE_TEXT', "somesecret")
+    storage_path: str = environ.get('API_STORAGE_PATH', environ.get('HOME') + '/woven_box_storage')
 
     class Config:
         env_prefix = 'API_'

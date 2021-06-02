@@ -1,7 +1,6 @@
 *.pyc
 */.DS_Store
 .DS_Store
-Pipfile.lock
 .coverage
 __pycache__
 .vscode
