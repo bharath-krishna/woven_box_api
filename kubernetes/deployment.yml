@@ -136,6 +136,11 @@ spec:
             claimName: woven-box-pvc
       containers:
         - env:
+            - name: API_WORKERS
+              valueFrom:
+                configMapKeyRef:
+                  key: API_WORKERS
+                  name: woven-box-api-config-mnwj
             - name: API_FIREBASE_CONFIGS
               valueFrom:
                 configMapKeyRef:
