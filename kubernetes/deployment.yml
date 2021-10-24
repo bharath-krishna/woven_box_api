@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: woven-box-api
+    app: my-box-api
   managedFields:
     - apiVersion: apps/v1
       fieldsType: FieldsV1
@@ -32,7 +32,7 @@ metadata:
                 'f:app': {}
             'f:spec':
               'f:containers':
-                'k:{"name":"woven-box-api-image-sha256-1"}':
+                'k:{"name":"my-box-api-image-sha256-1"}':
                   .: {}
                   'f:env':
                     .: {}
@@ -111,13 +111,13 @@ metadata:
       manager: kube-controller-manager
       operation: Update
       time: '2021-05-29T02:55:22Z'
-  name: woven-box-api
+  name: my-box-api
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: woven-box-api
+      app: my-box-api
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -126,43 +126,43 @@ spec:
   template:
     metadata:
       labels:
-        app: woven-box-api
+        app: my-box-api
     spec:
       nodeSelector:
-        type: woven-box-storage
+        type: my-box-storage
       volumes:
-        - name: woven-box-storage
+        - name: my-box-storage
           persistentVolumeClaim:
-            claimName: woven-box-pvc
+            claimName: my-box-pvc
       containers:
         - env:
             - name: API_FIREBASE_CONFIGS
               valueFrom:
                 configMapKeyRef:
                   key: API_FIREBASE_CONFIGS
-                  name: woven-box-api-config-mnwj
+                  name: my-box-api-config-mnwj
             - name: API_HOST
               valueFrom:
                 configMapKeyRef:
                   key: API_HOST
-                  name: woven-box-api-config-mnwj
+                  name: my-box-api-config-mnwj
             - name: API_PORT
               valueFrom:
                 configMapKeyRef:
                   key: API_PORT
-                  name: woven-box-api-config-mnwj
-          image: gcr.io/huddl-ai/github.com/bharath-krishna/woven-box_api
+                  name: my-box-api-config-mnwj
+          image: gcr.io/huddl-ai/github.com/bharath-krishna/my-box_api
           imagePullPolicy: IfNotPresent
-          name: woven-box-api-image-sha256-1
+          name: my-box-api-image-sha256-1
           volumeMounts:
-            - mountPath: "/home/fastapi/woven_box_storage"
-              name: woven-box-storage
+            - mountPath: "/home/fastapi/my_box_storage"
+              name: my-box-storage
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    app: woven-box-api
+    app: my-box-api
   managedFields:
     - apiVersion: autoscaling/v2beta1
       fieldsType: FieldsV1
@@ -194,7 +194,7 @@ metadata:
       manager: vpa-recommender
       operation: Update
       time: '2021-05-29T02:55:13Z'
-  name: woven-box-api-hpa-ra3f
+  name: my-box-api-hpa-ra3f
   namespace: default
 spec:
   maxReplicas: 5
@@ -207,7 +207,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: woven-box-api
+    name: my-box-api
 ---
 apiVersion: v1
 kind: Service
@@ -215,9 +215,9 @@ metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
     cloud.google.com/neg-status: >-
-      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-woven-box-api-service-80-ee86301b"},"zones":["us-central1-c"]}
+      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-my-box-api-service-80-ee86301b"},"zones":["us-central1-c"]}
   labels:
-    app: woven-box-api
+    app: my-box-api
   managedFields:
     - apiVersion: v1
       fieldsType: FieldsV1
@@ -253,7 +253,7 @@ metadata:
       manager: glbc
       operation: Update
       time: '2021-05-28T12:13:22Z'
-  name: woven-box-api-service
+  name: my-box-api-service
   namespace: default
 spec:
   clusterIP: 10.8.6.30
@@ -264,6 +264,6 @@ spec:
       protocol: TCP
       targetPort: 8088
   selector:
-    app: woven-box-api
+    app: my-box-api
   sessionAffinity: None
   type: NodePort

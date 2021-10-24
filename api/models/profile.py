@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from pydantic import BaseModel
 
 
@@ -15,8 +15,8 @@ class UserModel(BaseModel):
     sub: str
     iat: int
     exp: int
-    email: str
-    email_verified: bool
+    email: Optional[str]
+    email_verified: Optional[bool]
     firebase: FirebaseModel
     uid: str
 

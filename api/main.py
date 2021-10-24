@@ -45,7 +45,7 @@ app = Application(docs_url='/apidocs',
 
 origins = [
     'http://localhost:3000',
-    'http://woven-box.bharathk.in'
+    'http://my-box.bharathk.in'
 ]
 
 app.add_middleware(

@@ -1,7 +1,7 @@
-# Woven Box
+# My Box
 ## Backend APIs
 
-[![Build Status](https://travis-ci.com/bharath-krishna/woven-box_api.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/woven-box_api)
+[![Build Status](https://travis-ci.com/bharath-krishna/my-box_api.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/my-box_api)
 
 This is a [FastAPI](https://fastapi.tiangolo.com/) project.
 
@@ -27,8 +27,8 @@ Firebase service account details are base64 encoded from a secrets.json file to 
 
 
 ```bash
-> docker build -t woven_box_api .
-> docker run -d --name woven_box_api -p 8088:8088 woven_box_api
+> docker build -t my_box_api .
+> docker run -d --name my_box_api -p 8088:8088 my_box_api
 ```
 
 and access [http://localhost:8088/apidocs](http://localhost:8088/apidocs) for Swagger specs page.
@@ -47,14 +47,14 @@ API_ACCESS_LOG | True
 API_DEBUG | True
 API_FIREBASE_CONFIGS | None
 API_SIGNATURE_TEXT | somesecret
-API_STORAGE_PATH | ~/woven_box_storage
+API_STORAGE_PATH | ~/my_box_storage
 
 
 ## How to stop and remove
 
 ```bash
-> docker stop woven_box_api
-> docker rm woven_box_api
+> docker stop my_box_api
+> docker rm my_box_api
 ```
 
 ### END
