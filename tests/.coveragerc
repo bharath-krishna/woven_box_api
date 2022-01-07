@@ -25,5 +25,5 @@ exclude_lines =
 ignore_errors = True
 
 [html]
-title = "Woven Box - Backend APIs"
+title = "My Box - Backend APIs"
 directory = htmlcov

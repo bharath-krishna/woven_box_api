@@ -1,7 +1,7 @@
-# Woven Box
+# My Box
 ## Backend APIs
 
-[![Build Status](https://travis-ci.com/bharath-krishna/woven-box_api.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/woven-box_api)
+[![Build Status](https://travis-ci.com/bharath-krishna/my-box_api.svg?branch=master)](https://travis-ci.com/github/bharath-krishna/my-box_api)
 
 This is a [FastAPI](https://fastapi.tiangolo.com/) project.
 
@@ -12,6 +12,7 @@ First, run the development server:
 ```bash
 > pipenv shell
 > pipenv install
+> ./scripts/run_uvicorn.sh
 ```
 
 Open [http://localhost:8088/apidocs](http://localhost:8088/apidocs) with your browser to see the result.
@@ -26,18 +27,34 @@ Firebase service account details are base64 encoded from a secrets.json file to 
 
 
 ```bash
-> docker build -t fastapi_backend .
-> docker run -d --name fastapi_backend -p 8088:8088 fastapi_backend
+> docker build -t my_box_api .
+> docker run -d --name my_box_api -p 8088:8088 my_box_api
 ```
 
 and access [http://localhost:8088/apidocs](http://localhost:8088/apidocs) for Swagger specs page.
+
+The app uses default configs but can be passed from docker run command. The default env vars are as below
+
+Field | Value
+--- | ---
+API_PREFIX | /api
+API_HOST | 0.0.0.0
+API_PORT | 8088
+API_LOG_LEVEL | debug
+API_WORKERS | 4
+API_RELOAD | True
+API_ACCESS_LOG | True
+API_DEBUG | True
+API_FIREBASE_CONFIGS | None
+API_SIGNATURE_TEXT | somesecret
+API_STORAGE_PATH | ~/my_box_storage
 
 
 ## How to stop and remove
 
 ```bash
-> docker stop fastapi_backend
-> docker rm fastapi_backend
+> docker stop my_box_api
+> docker rm my_box_api
 ```
 
 ### END
