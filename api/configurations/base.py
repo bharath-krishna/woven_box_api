@@ -1,6 +1,7 @@
 import logging.config
 from functools import lru_cache
 from os import environ
+from typing import List
 from pydantic import BaseSettings
 
 
@@ -86,6 +87,7 @@ class Settings(BaseSettings):
     firebase: str = environ.get('API_FIREBASE_CONFIGS')
     signature_text: str = environ.get('API_SIGNATURE_TEXT', "somesecret")
     storage_path: str = environ.get('API_STORAGE_PATH', environ.get('HOME') + '/my_box_storage')
+    origins: List[str] = environ.get('ORIGINS', 'http://localhost:3000,http://box-ui.bharathk.in').split(',')
 
     class Config:
         env_prefix = 'API_'

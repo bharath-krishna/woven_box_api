@@ -43,14 +43,9 @@ app = Application(docs_url='/apidocs',
                   version=config.version)
 
 
-origins = [
-    'http://localhost:3000',
-    'http://my-box.bharathk.in'
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=config.origins,
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
